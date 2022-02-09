@@ -10,3 +10,5 @@ class Potato {
   int path[512];
   Potato() : num_hops(0), count(0) { memset(path, 0, sizeof(path)); }
 };
+
+int start_ringmaster(const char *myPort);

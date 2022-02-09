@@ -15,8 +15,10 @@ int main(int argc, char *argv[])
 {
     if (argc != 4)
     {
-        std::cout << "in valid input ringmaster <port_num> <num_players> <num_hops>" << std::endl;
+        std::cout << "Syntax: ringmaster <port_num> <num_players> <num_hops>" << std::endl;
         return 1;
     }
+    int socket_fd = start_ringmaster(argv[1]);
+    close(socket_fd);
     return 0;
 }
