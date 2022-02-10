@@ -70,12 +70,17 @@ int start_ringmaster(const char *myPort)
         return -1;
     } //if
 
-    char buffer[512];
-    recv(client_connection_fd, buffer, 9, 0);
-    buffer[9] = 0;
+    //char buffer[512];
+    Potato received_potato;
+    recv(client_connection_fd, &received_potato, sizeof(received_potato), 0);
+    //buffer[9] = 0;
 
-    std::cout << "Server received: " << buffer << std::endl;
-
+    std::cout << "Server received: " << received_potato.game_progress << std::endl;
+    received_potato.game_progress[2] = 'l';
+    received_potato.game_progress[3] = 'a';
+    received_potato.game_progress[4] = 0;
+    std::cout << "Server send: " << received_potato.game_progress << std::endl;
+    send(socket_fd, &received_potato, sizeof(received_potato), 0);
     freeaddrinfo(host_info_list);
 
     return socket_fd;
