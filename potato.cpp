@@ -80,7 +80,7 @@ int start_ringmaster(const char *myPort)
     received_potato.game_progress[3] = 'a';
     received_potato.game_progress[4] = 0;
     std::cout << "Server send: " << received_potato.game_progress << std::endl;
-    send(socket_fd, &received_potato, sizeof(received_potato), 0);
+    send(client_connection_fd, &received_potato, sizeof(received_potato), 0);
     freeaddrinfo(host_info_list);
 
     return socket_fd;
