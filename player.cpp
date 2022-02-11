@@ -70,8 +70,8 @@ int main(int argc, char *argv[])
     play_potato.game_progress[2] = 0;
     //send(socket_fd, message, strlen(message), 0);
     send(socket_fd, &play_potato, sizeof(play_potato), 0);
-    recv(socket_fd, &from_potato, sizeof(from_potato), 0);
-    std::cout << "Player received: " << from_potato.game_progress << std::endl;
+    recv(socket_fd, &play_potato, sizeof(play_potato), 0);
+    std::cout << "Player received: " << play_potato.game_progress << std::endl;
     freeaddrinfo(host_info_list);
     close(socket_fd);
     return 0;

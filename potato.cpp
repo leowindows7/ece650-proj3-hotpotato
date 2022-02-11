@@ -59,28 +59,28 @@ int start_ringmaster(const char *myPort)
         return -1;
     } //if
     // review this part
-    std::cout << "Waiting for connection on port " << port << std::endl;
-    struct sockaddr_storage socket_addr;
-    socklen_t socket_addr_len = sizeof(socket_addr);
-    int client_connection_fd;
-    client_connection_fd = accept(socket_fd, (struct sockaddr *)&socket_addr, &socket_addr_len);
-    if (client_connection_fd == -1)
-    {
-        std::cerr << "Error: cannot accept connection on socket" << std::endl;
-        return -1;
-    } //if
+    // std::cout << "Waiting for connection on port " << port << std::endl;
+    // struct sockaddr_storage socket_addr;
+    // socklen_t socket_addr_len = sizeof(socket_addr);
+    // int client_connection_fd;
+    // client_connection_fd = accept(socket_fd, (struct sockaddr *)&socket_addr, &socket_addr_len);
+    // if (client_connection_fd == -1)
+    // {
+    //     std::cerr << "Error: cannot accept connection on socket" << std::endl;
+    //     return -1;
+    // } //if
 
-    //char buffer[512];
-    Potato received_potato;
-    recv(client_connection_fd, &received_potato, sizeof(received_potato), 0);
-    //buffer[9] = 0;
+    // //char buffer[512];
+    // Potato received_potato;
+    // recv(client_connection_fd, &received_potato, sizeof(received_potato), 0);
+    // //buffer[9] = 0;
 
-    std::cout << "Server received: " << received_potato.game_progress << std::endl;
-    received_potato.game_progress[2] = 'l';
-    received_potato.game_progress[3] = 'a';
-    received_potato.game_progress[4] = 0;
-    std::cout << "Server send: " << received_potato.game_progress << std::endl;
-    send(client_connection_fd, &received_potato, sizeof(received_potato), 0);
+    // std::cout << "Server received: " << received_potato.game_progress << std::endl;
+    // received_potato.game_progress[2] = 'l';
+    // received_potato.game_progress[3] = 'a';
+    // received_potato.game_progress[4] = 0;
+    // std::cout << "Server send: " << received_potato.game_progress << std::endl;
+    // send(client_connection_fd, &received_potato, sizeof(received_potato), 0);
     freeaddrinfo(host_info_list);
 
     return socket_fd;
