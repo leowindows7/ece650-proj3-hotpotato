@@ -61,17 +61,17 @@ int main(int argc, char *argv[])
         return -1;
     } //if
 
+    // above connect to ringmaster 
+
     const char *message = "hi there!";
     Potato play_potato;
-    Potato from_potato;
-    play_potato.num_hops = 100;
-    play_potato.game_progress[0] = 'h';
-    play_potato.game_progress[1] = 'a';
-    play_potato.game_progress[2] = 0;
+    Player myInfo;
     //send(socket_fd, message, strlen(message), 0);
-    send(socket_fd, &play_potato, sizeof(play_potato), 0);
-    recv(socket_fd, &play_potato, sizeof(play_potato), 0);
-    std::cout << "Player received: " << play_potato.game_progress << std::endl;
+    send(socket_fd, &myInfo, sizeof(myInfo), 0);
+    recv(socket_fd, &myInfo, sizeof(myInfo), 0);
+    std::cout << "Myinfo: " << myInfo.seqNo << std::endl;
+    std::cout << "My left: " << myInfo.left_fd << std::endl;
+    std::cout << "My right: " << myInfo.right_fd << std::endl;
     freeaddrinfo(host_info_list);
     close(socket_fd);
     return 0;

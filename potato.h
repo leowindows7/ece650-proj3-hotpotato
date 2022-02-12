@@ -20,4 +20,13 @@ class Potato {
   ~Potato(){};
 };
 
+class Player{
+  public:
+    int seqNo;
+    int my_fd;
+    int left_fd;
+    int right_fd;
+    Player(): seqNo(-1), my_fd(-1), left_fd(-1), right_fd(-1){}
+};
+
 int start_ringmaster(const char *myPort);
