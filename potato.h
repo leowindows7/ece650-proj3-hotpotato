@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <string.h>
-
+#include <string>
 #include <cstdio>
+#include <vector>
 #include <cstdlib>
+#include <vector>
 class Potato {
  public:
   int num_hops;
@@ -24,9 +26,21 @@ class Player{
   public:
     int seqNo;
     int my_fd;
-    int left_fd;
-    int right_fd;
-    Player(): seqNo(-1), my_fd(-1), left_fd(-1), right_fd(-1){}
+    int my_port;
+    int my_left;
+    int my_right;
+    Player(): seqNo(-1), my_fd(-1), my_port(-1), my_left(-1), my_right(-1){}
+    Player(const Player &rhs):seqNo(rhs.seqNo), my_fd(rhs.my_fd), my_port(rhs.my_port), my_left(-1), my_right(-1){}
+    Player & operator=(const Player &rhs){
+      if(this != &rhs){
+        seqNo = rhs.seqNo;
+        my_fd = rhs.my_fd;
+        my_port= rhs.my_port;
+        my_left = rhs.my_left;
+        my_right= rhs.my_right;
+      }
+    }
+    ~Player(){};
 };
 
 int start_ringmaster(const char *myPort);
