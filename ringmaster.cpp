@@ -72,18 +72,21 @@ int main(int argc, char *argv[])
     }
     Potato sent_potato;
     sent_potato.num_hops = num_hops;
+    sent_potato.count = 0;
     srand (time(NULL));
+    //fisrt throw from server to player
     int send_to_player = rand() % players_vec.size();
-    sent_potato.path.push_back(send_to_player);
     sent_potato.game_progress[sent_potato.count] = send_to_player;
     send(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
     std::cout << "Server send potato to: " << send_to_player << std::endl;
-    std::cout << "num_hop: " << sent_potato.num_hops << std::endl;
-    recv(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
-    std::cout << "num_hop: " << sent_potato.num_hops << std::endl;
-    int next_player = sent_potato.game_progress[sent_potato.count];
-    send(players_vec[next_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
-    std::cout << "Server send potato to: " << next_player << std::endl;
+    //fisrt throw from server to player
+    while(sent_potato.num_hops > 0){
+        std::cout << "num_hop: " << sent_potato.num_hops << std::endl;
+        recv(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
+        send_to_player = sent_potato.game_progress[sent_potato.count];
+        send(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
+        std::cout << "Server send potato to: " << send_to_player << std::endl;
+    }
     close(socket_fd);
     return 0;
 }
