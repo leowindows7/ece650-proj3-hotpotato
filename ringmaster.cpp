@@ -83,11 +83,17 @@ int main(int argc, char *argv[])
     while(sent_potato.num_hops > 0){
         std::cout << "num_hop: " << sent_potato.num_hops << std::endl;
         recv(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
+        std::cout << "receiv potato from: " << send_to_player << std::endl;
         send_to_player = sent_potato.game_progress[sent_potato.count];
         //std::cout << "count: " << sent_potato.count << std::endl;
         send(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
         std::cout << "Server send potato to: " << send_to_player << std::endl;
     }
+    std::cout << "play path:" << sent_potato.count << std::endl ;
+    for (int i = 0; i < sent_potato.count; i++){
+        std::cout << sent_potato.game_progress[0];
+    }
+    std::cout << std::endl;
     close(socket_fd);
     return 0;
 }

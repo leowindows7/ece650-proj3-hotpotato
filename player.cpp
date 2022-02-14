@@ -75,12 +75,15 @@ int main(int argc, char *argv[])
     status = recv(socket_fd, &play_potato, sizeof(play_potato), 0);
     //if (status > 0){
         while(play_potato.num_hops > 0){
-            std::cout << "I received a potato!" << std::endl;
-            std::cout << play_potato.count << std::endl;
             play_potato.num_hops--;
             play_potato.count++;
             play_potato.game_progress[play_potato.count] = myInfo.my_right;
+            std::cout <<"sending potato to " << myInfo.my_right<< std::endl;
             send(socket_fd, &play_potato, sizeof(play_potato), 0);
+            if(play_potato.num_hops == 0){
+                std::cout <<"I'm it" << std::endl;
+                break;
+            }
             recv(socket_fd, &play_potato, sizeof(play_potato), 0);
         }
     //}
