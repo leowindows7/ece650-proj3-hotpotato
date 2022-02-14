@@ -84,6 +84,7 @@ int main(int argc, char *argv[])
         std::cout << "num_hop: " << sent_potato.num_hops << std::endl;
         recv(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
         send_to_player = sent_potato.game_progress[sent_potato.count];
+        //std::cout << "count: " << sent_potato.count << std::endl;
         send(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
         std::cout << "Server send potato to: " << send_to_player << std::endl;
     }

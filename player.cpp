@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     //std::cout << "Myport: " << myInfo.my_port << std::endl;
     std::cout << "My left: " << myInfo.my_left << std::endl;
     std::cout << "My right: " << myInfo.my_right << std::endl;
-    status = recv(socket_fd, &play_potato, sizeof(myInfo), 0);
+    status = recv(socket_fd, &play_potato, sizeof(play_potato), 0);
     //if (status > 0){
         while(play_potato.num_hops > 0){
             std::cout << "I received a potato!" << std::endl;
@@ -80,8 +80,8 @@ int main(int argc, char *argv[])
             play_potato.num_hops--;
             play_potato.count++;
             play_potato.game_progress[play_potato.count] = myInfo.my_right;
-            send(socket_fd, &play_potato, sizeof(myInfo), 0);
-            recv(socket_fd, &play_potato, sizeof(myInfo), 0);
+            send(socket_fd, &play_potato, sizeof(play_potato), 0);
+            recv(socket_fd, &play_potato, sizeof(play_potato), 0);
         }
     //}
     freeaddrinfo(host_info_list);
