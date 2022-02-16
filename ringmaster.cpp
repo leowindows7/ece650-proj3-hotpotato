@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
         //std::cout << players_vec[i].my_fd << std::endl;
     }
     Potato sent_potato;
-    sent_potato.num_hops = num_hops;
+    sent_potato.num_hops = num_hops + 1;
     sent_potato.count = 0;
     srand (time(NULL));
     //fisrt throw from server to player
@@ -80,8 +80,7 @@ int main(int argc, char *argv[])
     send(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
     std::cout << "Server send potato to: " << send_to_player << std::endl;
     //fisrt throw from server to player
-    Potato terminator_potato;
-    terminator_potato.num_hops = -1;
+    
     while(sent_potato.num_hops > 0){
         recv(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
         //std::cout << "receiv potato from: " << send_to_player << std::endl;

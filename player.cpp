@@ -6,7 +6,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
-
+#include <ctime>
 #include <algorithm>
 #include <cstring>
 #include <iostream>
@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     struct addrinfo *host_info_list;
     const char *hostname = argv[1]; // 152.3.76.77
     const char *port = argv[2];     // 4444
-
+    srand (time(NULL));
     memset(&host_info, 0, sizeof(host_info));
     host_info.ai_family = AF_UNSPEC;
     host_info.ai_socktype = SOCK_STREAM;
@@ -77,23 +77,23 @@ int main(int argc, char *argv[])
     
     while (play_potato.num_hops > 0)
     {
-        srand (time(0));
+        
         if (status <= 0)
         {
             break;
         }
-        std::cout << "hops " << play_potato.num_hops << std::endl;
         play_potato.num_hops--;
         play_potato.count++;
+        std::cout << "hops " << play_potato.num_hops << std::endl;
         int leftOrRight = rand();
-        std::cout << leftOrRight << std::endl;
+        //std::cout << leftOrRight << std::endl;
         if (leftOrRight % 2 == 0){
             leftOrRight = myInfo.my_right;
         } else {
             leftOrRight = myInfo.my_left;
         }
         play_potato.game_progress[play_potato.count] = leftOrRight;
-        std::cout << "sending potato to " << myInfo.my_right << std::endl;
+        std::cout << "sending potato to " << leftOrRight<< std::endl;
         send(socket_fd, &play_potato, sizeof(play_potato), 0);
         if (play_potato.num_hops == 0)
         {
