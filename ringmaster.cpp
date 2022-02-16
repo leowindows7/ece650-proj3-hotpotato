@@ -22,6 +22,16 @@ int main(int argc, char *argv[])
     int socket_fd = start_ringmaster(argv[1]);
     int num_players = atoi(argv[2]);
     int num_hops = atoi(argv[3]);
+    if (num_hops < 0)
+    {
+        std::cerr << "num of hops must be greater or equal to 0"<< std::endl;
+        return -1;
+    }
+    if (num_players < 2)
+    {
+        std::cerr << "num of players must be greater or equal to 2"<< std::endl;
+        return -1;
+    }
     // std::cout << "Waiting for connection on port " << argv[1] << std::endl;
     std::cout << "Potato Ringmaster" << std::endl;
     std::cout << "Players = " << num_players << std::endl;

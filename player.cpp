@@ -77,7 +77,6 @@ int main(int argc, char *argv[])
     
     while (play_potato.num_hops > 0)
     {
-        
         if (status <= 0)
         {
             break;
