@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
     int socket_fd;
     struct addrinfo host_info;
     struct addrinfo *host_info_list;
-    const char *hostname = argv[1]; //152.3.76.77
-    const char *port = argv[2];// 4444
+    const char *hostname = argv[1]; // 152.3.76.77
+    const char *port = argv[2];     // 4444
 
     memset(&host_info, 0, sizeof(host_info));
     host_info.ai_family = AF_UNSPEC;
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
         std::cerr << "Error: cannot get address info for host" << std::endl;
         std::cerr << "  (" << hostname << "," << port << ")" << std::endl;
         return -1;
-    } //if
+    } // if
 
     socket_fd = socket(host_info_list->ai_family,
                        host_info_list->ai_socktype,
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
         std::cerr << "Error: cannot create socket" << std::endl;
         std::cerr << "  (" << hostname << "," << port << ")" << std::endl;
         return -1;
-    } //if
+    } // if
 
     std::cout << "Connecting to " << hostname << " on port " << port << "..." << std::endl;
 
@@ -59,33 +59,48 @@ int main(int argc, char *argv[])
         std::cerr << "Error: cannot connect to socket" << std::endl;
         std::cerr << "  (" << hostname << "," << port << ")" << std::endl;
         return -1;
-    } //if
+    } // if
 
-    // above connect to ringmaster 
+    // above connect to ringmaster
 
     const char *message = "hi there!";
     Potato play_potato;
     Player myInfo;
-    //send(socket_fd, message, strlen(message), 0);
+    // send(socket_fd, message, strlen(message), 0);
     send(socket_fd, &myInfo, sizeof(myInfo), 0);
     recv(socket_fd, &myInfo, sizeof(myInfo), 0);
     //std::cout << "Myport: " << myInfo.my_port << std::endl;
-    std::cout << "My left: " << myInfo.my_left << std::endl;
-    std::cout << "My right: " << myInfo.my_right << std::endl;
+    //std::cout << "My left: " << myInfo.my_left << std::endl;
+    //std::cout << "My right: " << myInfo.my_right << std::endl;
     status = recv(socket_fd, &play_potato, sizeof(play_potato), 0);
-    //if (status > 0){
-        while(play_potato.num_hops > 0){
-            play_potato.num_hops--;
-            play_potato.count++;
-            play_potato.game_progress[play_potato.count] = myInfo.my_right;
-            std::cout <<"sending potato to " << myInfo.my_right<< std::endl;
-            send(socket_fd, &play_potato, sizeof(play_potato), 0);
-            if(play_potato.num_hops == 0){
-                std::cout <<"I'm it" << std::endl;
-                break;
-            }
-            recv(socket_fd, &play_potato, sizeof(play_potato), 0);
+    // if (status > 0){
+    
+    while (play_potato.num_hops > 0)
+    {
+        srand (time(0));
+        if (status <= 0)
+        {
+            break;
         }
+        std::cout << "hops " << play_potato.num_hops << std::endl;
+        play_potato.num_hops--;
+        play_potato.count++;
+        int leftOrRight = rand();
+        std::cout << leftOrRight << std::endl;
+        if (leftOrRight % 2 == 0){
+            leftOrRight = myInfo.my_right;
+        } else {
+            leftOrRight = myInfo.my_left;
+        }
+        play_potato.game_progress[play_potato.count] = leftOrRight;
+        std::cout << "sending potato to " << myInfo.my_right << std::endl;
+        send(socket_fd, &play_potato, sizeof(play_potato), 0);
+        if (play_potato.num_hops == 0)
+        {
+            std::cout << "I'm it" << std::endl;
+        }
+        status = recv(socket_fd, &play_potato, sizeof(play_potato), 0);
+    }
     //}
     freeaddrinfo(host_info_list);
     close(socket_fd);

@@ -80,18 +80,23 @@ int main(int argc, char *argv[])
     send(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
     std::cout << "Server send potato to: " << send_to_player << std::endl;
     //fisrt throw from server to player
+    Potato terminator_potato;
+    terminator_potato.num_hops = -1;
     while(sent_potato.num_hops > 0){
-        std::cout << "num_hop: " << sent_potato.num_hops << std::endl;
         recv(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
-        std::cout << "receiv potato from: " << send_to_player << std::endl;
+        //std::cout << "receiv potato from: " << send_to_player << std::endl;
+        std::cout << "num_hop: " << sent_potato.num_hops << std::endl;
         send_to_player = sent_potato.game_progress[sent_potato.count];
-        //std::cout << "count: " << sent_potato.count << std::endl;
+        if(sent_potato.num_hops <= 0){
+            //send(players_vec[send_to_player].my_fd, &terminator_potato, sizeof(sent_potato), 0);
+            std::cout << "Game over " <<std::endl ;
+        }
         send(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
         std::cout << "Server send potato to: " << send_to_player << std::endl;
     }
     std::cout << "play path:" << sent_potato.count << std::endl ;
     for (int i = 0; i < sent_potato.count; i++){
-        std::cout << sent_potato.game_progress[0];
+        std::cout << i << sent_potato.game_progress[1];
     }
     std::cout << std::endl;
     close(socket_fd);
