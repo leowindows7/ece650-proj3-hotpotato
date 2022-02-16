@@ -29,8 +29,9 @@ class Player{
     int my_port;
     int my_left;
     int my_right;
-    Player(): seqNo(-1), my_fd(-1), my_port(-1), my_left(-1), my_right(-1){}
-    Player(const Player &rhs):seqNo(rhs.seqNo), my_fd(rhs.my_fd), my_port(rhs.my_port), my_left(-1), my_right(-1){}
+    int num_players;
+    Player(): seqNo(-1), my_fd(-1), my_port(-1), my_left(-1), my_right(-1), num_players(-1){}
+    Player(const Player &rhs):seqNo(rhs.seqNo), my_fd(rhs.my_fd), my_port(rhs.my_port), my_left(rhs.my_left), my_right(rhs.my_right), num_players(rhs.num_players){}
     Player & operator=(const Player &rhs){
       if(this != &rhs){
         seqNo = rhs.seqNo;
@@ -38,6 +39,7 @@ class Player{
         my_port= rhs.my_port;
         my_left = rhs.my_left;
         my_right= rhs.my_right;
+        num_players = rhs.num_players;
       }
     }
     ~Player(){};

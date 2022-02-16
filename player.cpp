@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
         return -1;
     } // if
 
-    std::cout << "Connecting to " << hostname << " on port " << port << "..." << std::endl;
+    //std::cout << "Connecting to " << hostname << " on port " << port << "..." << std::endl;
 
     status = connect(socket_fd, host_info_list->ai_addr, host_info_list->ai_addrlen);
     if (status == -1)
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     recv(socket_fd, &myInfo, sizeof(myInfo), 0);
     //std::cout << "Myport: " << myInfo.my_port << std::endl;
     //std::cout << "My left: " << myInfo.my_left << std::endl;
-    //std::cout << "My right: " << myInfo.my_right << std::endl;
+    std::cout << "Connected as player " << myInfo.seqNo << " out of " << myInfo.num_players << " total players" << std::endl;
     status = recv(socket_fd, &play_potato, sizeof(play_potato), 0);
     // if (status > 0){
     
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
         }
         play_potato.num_hops--;
         play_potato.count++;
-        std::cout << "hops " << play_potato.num_hops << std::endl;
+        //std::cout << "hops " << play_potato.num_hops << std::endl;
         int leftOrRight = rand();
         //std::cout << leftOrRight << std::endl;
         if (leftOrRight % 2 == 0){
@@ -93,7 +93,10 @@ int main(int argc, char *argv[])
             leftOrRight = myInfo.my_left;
         }
         play_potato.game_progress[play_potato.count] = leftOrRight;
-        std::cout << "sending potato to " << leftOrRight<< std::endl;
+        if (play_potato.num_hops > 0)
+        {
+            std::cout << "sending potato to " << leftOrRight<< std::endl;
+        }
         send(socket_fd, &play_potato, sizeof(play_potato), 0);
         if (play_potato.num_hops == 0)
         {
