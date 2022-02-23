@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
         play_potato.game_progress[play_potato.count] = leftOrRight;
         if (play_potato.num_hops > 0)
         {
-            std::cout << "sending potato to " << leftOrRight << std::endl;
+            std::cout << "Sending potato to " << leftOrRight << std::endl;
         }
         send(socket_fd, &play_potato, sizeof(play_potato), 0);
         if (play_potato.num_hops == 0)

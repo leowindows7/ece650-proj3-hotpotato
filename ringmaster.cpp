@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     int send_to_player = rand() % players_vec.size();
     sent_potato.game_progress[sent_potato.count] = send_to_player;
     send(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
-    std::cout << "Ready to start the game, sending potato to player: " << send_to_player << std::endl;
+    std::cout << "Ready to start the game, sending potato to player " << send_to_player << std::endl;
     // fisrt throw from server to player
     std::vector<int> play_path;
     while (sent_potato.num_hops > 0)
