@@ -24,12 +24,13 @@ int main(int argc, char *argv[])
     int num_hops = atoi(argv[3]);
     if (num_hops < 0)
     {
-        std::cerr << "num of hops must be greater or equal to 0"<< std::endl;
+        std::cerr << "num of hops must be greater or equal to 0" << std::endl;
         return -1;
     }
+
     if (num_players < 2)
     {
-        std::cerr << "num of players must be greater or equal to 2"<< std::endl;
+        std::cerr << "num of players must be greater or equal to 2" << std::endl;
         return -1;
     }
     // std::cout << "Waiting for connection on port " << argv[1] << std::endl;
@@ -67,15 +68,19 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < players_vec.size(); i++)
     {
-        players_vec[i].num_players =  players_vec.size();
+        players_vec[i].num_players = players_vec.size();
         int left_fd_index = (i - 1 + players_vec.size()) % players_vec.size();
         int right_fd_index = (i + 1 + players_vec.size()) % players_vec.size();
         players_vec[i].my_left = players_vec[left_fd_index].seqNo;
         players_vec[i].my_right = players_vec[right_fd_index].seqNo;
         send(players_vec[i].my_fd, &players_vec[i], sizeof(players_vec[i]), 0);
     }
+    if (num_hops == 0)
+    {
+        return -1;
+    }
     Potato sent_potato;
-    sent_potato.num_hops = num_hops + 1;
+    sent_potato.num_hops = num_hops;
     sent_potato.count = 0;
     srand(time(NULL));
     // fisrt throw from server to player
