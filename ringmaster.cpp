@@ -73,6 +73,7 @@ int main(int argc, char *argv[])
         int right_fd_index = (i + 1 + players_vec.size()) % players_vec.size();
         players_vec[i].my_left = players_vec[left_fd_index].seqNo;
         players_vec[i].my_right = players_vec[right_fd_index].seqNo;
+        //memset(players_vec[i], 0, sizeof(players_vec[i]));
         send(players_vec[i].my_fd, &players_vec[i], sizeof(players_vec[i]), 0);
     }
     if (num_hops == 0)
@@ -90,6 +91,7 @@ int main(int argc, char *argv[])
     std::cout << "Ready to start the game, sending potato to player " << send_to_player << std::endl;
     // fisrt throw from server to player
     std::vector<int> play_path;
+    std::string path = "";
     while (sent_potato.num_hops > 0)
     {
         play_path.push_back(send_to_player);
@@ -101,16 +103,21 @@ int main(int argc, char *argv[])
         }
         send(players_vec[send_to_player].my_fd, &sent_potato, sizeof(sent_potato), 0);
     }
-    std::cout << "Trace of Potato:" << std::endl;
-    for (int i = 0; i < sent_potato.count; i++)
-    {
-        std::string delimeter = ",";
-        if (i == sent_potato.count - 1)
-        {
-            delimeter = "";
-        }
-        std::cout << play_path[i] << delimeter << sent_potato.game_progress[1];
-    }
+    std::cout << "Trace of potato:" << std::endl;
+    
+     for (int i = 0; i < sent_potato.count; i++)
+     {
+         std::string delimeter = ",";
+         if (i == sent_potato.count - 1)
+         {
+             delimeter = "";
+         }
+         //std::cout << play_path[i] << delimeter << sent_potato.game_progress[1];
+         path.append(std::to_string(play_path[i]));
+         path.append(delimeter);
+         //std::cout << play_path[i] << delimeter;
+     }
+    std::cout << path;
     std::cout << std::endl;
     close(socket_fd);
     return 0;
