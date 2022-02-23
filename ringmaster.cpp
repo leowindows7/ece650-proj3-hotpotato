@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
             player_info.seqNo = players_vec.size();
             player_info.my_port = addr->sin_port;
             players_vec.push_back(player_info);
-            std::cout << "player " << players_vec.size() - 1 << " is ready to play" << std::endl;
+            std::cout << "Player " << players_vec.size() - 1 << " is ready to play" << std::endl;
         }
     }
 
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
     std::cout << "Trace of Potato:" << std::endl;
     for (int i = 0; i < sent_potato.count; i++)
     {
-        std::string delimeter = ", ";
+        std::string delimeter = ",";
         if (i == sent_potato.count - 1)
         {
             delimeter = "";
